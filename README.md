@@ -69,12 +69,12 @@ Backend exchanges the code for tokens and sends the user back to frontend with i
 Tokens are managed in backend during this exchange and used to interact with Slack APIs.
 
 Challenges & Learnings
-Configuring the OAuth callback URL consistently was tricky — it must match exactly across backend, frontend, and Slack app settings.
-Getting public URLs that work reliably through tunnels like ngrok and Cloudflare required extra care and testing.
-Handling 404 errors for the OAuth callback route taught us about backend routing and the importance of correct path mounting.
-Learned how to manage environment variables properly to keep secrets safe and URLs consistent.
-Discovered how important it is to restart servers after changes in environment files or tunnel URLs.
-Faced git challenges pushing code due to remote changes — learned how to pull, rebase, and resolve conflicts calmly.
-
-Overall, gained experience working with OAuth flows, local tunneling, and deploying local apps for demos.
+1)Configuring the OAuth callback URL consistently was tricky — it must match exactly across backend, frontend, and Slack app settings.
+2)Getting public URLs that work reliably through tunnels like ngrok and Cloudflare required extra care and testing.
+3)Handling 404 errors for the OAuth callback route taught us about backend routing and the importance of correct path mounting.
+4)Learned how to manage environment variables properly to keep secrets safe and URLs consistent.
+5)Discovered how important it is to restart servers after changes in environment files or tunnel URLs.
+6)Faced git challenges pushing code due to remote changes — learned how to pull, rebase, and resolve conflicts calmly.
+7)Eliminated unused imports and variables flagged by TypeScript to ensure clean builds.
+8)Overall, gained experience working with OAuth flows, local tunneling, and deploying local apps for demos.
 
