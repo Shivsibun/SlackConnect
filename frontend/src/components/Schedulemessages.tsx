@@ -9,6 +9,7 @@ interface ScheduledMessage {
 }
 
 interface Props {
+  teamId:string;
   messages: ScheduledMessage[];
   refreshMessages: () => void;
 }
