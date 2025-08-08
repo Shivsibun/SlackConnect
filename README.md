@@ -78,3 +78,6 @@ Challenges & Learnings
 7)Eliminated unused imports and variables flagged by TypeScript to ensure clean builds.
 8)Overall, gained experience working with OAuth flows, local tunneling, and deploying local apps for demos.
 
+Testing Instructions:
+When you click "Sign in with Slack", you will be redirected to Slack’s login page.
+Please log in with your own Slack workspace credentials and authorize the app to send and schedule messages in your workspace.
