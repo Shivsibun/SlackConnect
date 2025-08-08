@@ -9,12 +9,11 @@ interface ScheduledMessage {
 }
 
 interface Props {
-  teamId: string;
   messages: ScheduledMessage[];
   refreshMessages: () => void;
 }
 
-function Schedulemessages({ teamId, messages, refreshMessages }: Props) {
+function Schedulemessages({  messages, refreshMessages }: Props) {
   const cancelMessage = async (id: string) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/messages/scheduled/${id}`, {
