@@ -24,14 +24,14 @@ text
 PORT=3000
 SLACK_CLIENT_ID=9309003919574.9318713485346
 SLACK_CLIENT_SECRET=f4963ad5c10cc189c956385a974506db
-SLACK_REDIRECT_URI= https://pig-cool-jay.ngrok-free.app/api/auth/slack/callback
+SLACK_REDIRECT_URI=https://pig-cool-jay.ngrok-free.app/api/auth/slack/callback
 
 Frontend .env:
 
 text
 VITE_SLACK_CLIENT_ID=9309003919574.9318713485346
 VITE_SLACK_REDIRECT_URI= https://pig-cool-jay.ngrok-free.app/api/auth/slack/callback
-VITE_BACKEND_URL=http://localhost:3000
+VITE_BACKEND_URL=https://slack-connect-backend-inxd.onrender.com
 
 4. Run the servers
 Open two terminal windows/tabs:
@@ -70,7 +70,7 @@ Tokens are managed in backend during this exchange and used to interact with Sla
 
 Challenges & Learnings
 1)Configuring the OAuth callback URL consistently was tricky — it must match exactly across backend, frontend, and Slack app settings.
-2)Getting public URLs that work reliably through tunnels like ngrok and Cloudflare required extra care and testing.
+2)Getting public URLs that work reliably through tunnels like ngrok required extra care and testing but on the later phase I will try to remove the local tunneling.
 3)Handling 404 errors for the OAuth callback route taught us about backend routing and the importance of correct path mounting.
 4)Learned how to manage environment variables properly to keep secrets safe and URLs consistent.
 5)Discovered how important it is to restart servers after changes in environment files or tunnel URLs.
