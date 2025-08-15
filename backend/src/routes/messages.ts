@@ -6,6 +6,7 @@ import axios from 'axios';
 const router = Router();
 const prisma = new PrismaClient();
 
+// Send message immediately
 router.post('/send', async (req, res) => {
   const { teamId, channel, text } = req.body;
 
@@ -25,12 +26,32 @@ router.post('/send', async (req, res) => {
   }
 });
 
+// Schedule message in user's local time
 router.post('/schedule', async (req, res) => {
-  const { teamId, channel, text, sendAt } = req.body;
+  const { teamId, channel, text, sendAt, offset } = req.body;
 
   try {
+    if (!sendAt || offset === undefined) {
+      return res.status(400).send('sendAt and offset are required');
+    }
+
+    // Convert the local datetime string + offset to UTC Date
+    // sendAt from frontend is like "2025-08-15T12:37"
+    const [datePart, timePart] = sendAt.split('T');
+    const localDate = new Date(`${datePart}T${timePart}:00`);
+
+    // Adjust minutes by subtracting the local timezone offset
+    // offset is in minutes (e.g., IST = -330)
+    localDate.setMinutes(localDate.getMinutes() - offset);
+
     const newScheduledMessage = await prisma.scheduledMessage.create({
-      data: { teamId, channel, text, sendAt: new Date(sendAt), sent: false },
+      data: {
+        teamId,
+        channel,
+        text,
+        sendAt: localDate, // stored as UTC date
+        sent: false,
+      },
     });
 
     res.status(200).json(newScheduledMessage);
@@ -40,6 +61,7 @@ router.post('/schedule', async (req, res) => {
   }
 });
 
+// Get all scheduled messages for a team
 router.get('/scheduled/:teamId', async (req, res) => {
   const { teamId } = req.params;
 
@@ -54,6 +76,7 @@ router.get('/scheduled/:teamId', async (req, res) => {
   }
 });
 
+// Delete scheduled message
 router.delete('/scheduled/:id', async (req, res) => {
   const { id } = req.params;
 
