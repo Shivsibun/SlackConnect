@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import styles from './styles/message.module.css';
 
 interface ScheduledMessage {
@@ -43,30 +43,31 @@ function Messagescheduler({ teamId, onMessageScheduled }: Props) {
       setSending(false);
     }
   };
-  const scheduleMessage = async () => {
-    if (!channelsch || !scheduleText || !sendAt) return alert('All fields required');
-    try {
-      setScheduling(true);
-      const res = await fetch(`${backendUrl}/api/messages/schedule`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ teamId, channel: channelsch, text: scheduleText, sendAt }),
-      });
-      if (!res.ok) throw new Error('Failed to schedule');
+const scheduleMessage = async () => {
+  if (!channelsch || !scheduleText || !sendAt) return alert('All fields required');
+  try {
+    setScheduling(true);
+    const localDate = new Date(sendAt);
+    const utcSendAt = localDate.toISOString();
 
-      const newScheduledMessage: ScheduledMessage = await res.json();
+    const res = await fetch(`${backendUrl}/api/messages/schedule`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ teamId, channel: channelsch, text: scheduleText, sendAt: utcSendAt }), // <-- corrected
+    });
+    if (!res.ok) throw new Error('Failed to schedule');
+    const newScheduledMessage: ScheduledMessage = await res.json();
+    alert('Message scheduled!');
+    setScheduleText('');
+    setSendAt('');
+    if (onMessageScheduled) onMessageScheduled(newScheduledMessage);
+  } catch (err) {
+    alert('Error scheduling message: ' + err);
+  } finally {
+    setScheduling(false);
+  }
+};
 
-      alert('Message scheduled!');
-      setScheduleText('');
-      setSendAt('');
-
-      if (onMessageScheduled) onMessageScheduled(newScheduledMessage);
-    } catch (err) {
-      alert('Error scheduling message: ' + err);
-    } finally {
-      setScheduling(false);
-    }
-  };
 
   return (
     <>

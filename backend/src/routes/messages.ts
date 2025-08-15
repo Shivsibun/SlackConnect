@@ -15,7 +15,7 @@ router.post('/send', async (req, res) => {
     await axios.post(
       'https://slack.com/api/chat.postMessage',
       { channel, text },
-      { headers: { Authorization: `Bearer ${accessToken}` } }
+      { headers: { Authorization: ` ${accessToken}` } }
     );
 
     res.status(200).send('Message sent!');
