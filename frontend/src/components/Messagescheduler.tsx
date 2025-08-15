@@ -43,30 +43,38 @@ function Messagescheduler({ teamId, onMessageScheduled }: Props) {
       setSending(false);
     }
   };
-  const scheduleMessage = async () => {
-    if (!channelsch || !scheduleText || !sendAt) return alert('All fields required');
-    try {
-      setScheduling(true);
-      const res = await fetch(`${backendUrl}/api/messages/schedule`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ teamId, channel: channelsch, text: scheduleText, sendAt }),
-      });
-      if (!res.ok) throw new Error('Failed to schedule');
+  
+const scheduleMessage = async () => {
+  if (!channelsch || !scheduleText || !sendAt) return alert('All fields required');
+  try {
+    setScheduling(true);
 
-      const newScheduledMessage: ScheduledMessage = await res.json();
+    const offsetMinutes = new Date().getTimezoneOffset();
 
-      alert('Message scheduled!');
-      setScheduleText('');
-      setSendAt('');
+    const res = await fetch(`${backendUrl}/api/messages/schedule`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        teamId,
+        channel: channelsch,
+        text: scheduleText,
+        sendAt,
+        offset: offsetMinutes
+      }),
+    });
 
-      if (onMessageScheduled) onMessageScheduled(newScheduledMessage);
-    } catch (err) {
-      alert('Error scheduling message: ' + err);
-    } finally {
-      setScheduling(false);
-    }
-  };
+    if (!res.ok) throw new Error('Failed to schedule');
+    const newScheduledMessage: ScheduledMessage = await res.json();
+    alert('Message scheduled!');
+    setScheduleText('');
+    setSendAt('');
+    if (onMessageScheduled) onMessageScheduled(newScheduledMessage);
+  } catch (err) {
+    alert('Error scheduling message: ' + err);
+  } finally {
+    setScheduling(false);
+  }
+};
 
   return (
     <>
