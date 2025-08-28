@@ -47,6 +47,8 @@ const scheduleMessage = async () => {
   if (!channelsch || !scheduleText || !sendAt) return alert('All fields required');
   try {
     setScheduling(true);
+
+    // Fix: Convert local datetime to UTC
     const localDate = new Date(sendAt);
     const utcSendAt = localDate.toISOString();
 
@@ -67,6 +69,7 @@ const scheduleMessage = async () => {
     setScheduling(false);
   }
 };
+
 
 
   return (

@@ -18,7 +18,7 @@ router.get('/slack/callback', async (req, res) => {
   try {
     const { teamId } = await exchangeCodeForTokens(code as string);
     // Redirect your frontend with teamId
-    res.redirect(`https://slackconnect-tawny.vercel.app/?teamId=${encodeURIComponent(teamId)}`);
+  res.redirect(`https://slackconnect-tawny.vercel.app/?teamId=${encodeURIComponent(teamId)}`);
   } catch (err) {
     console.error('Error exchanging OAuth code:', err);
     res.status(500).send('Slack authorization failed.');
