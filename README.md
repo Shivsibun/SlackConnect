@@ -1,5 +1,5 @@
 Slack Connect App
-A simple app that lets users log in with Slack using OAuth. It has a backend server and a frontend website. The app uses public URLs via ngrok to work during development.
+A simple app that lets users log in with Slack using OAuth. It has a backend server and a frontend website. The app uses public URLs via ngrok to work during development..
 
 Setup Instructions
 1. Clone the project
