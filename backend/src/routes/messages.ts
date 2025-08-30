@@ -59,7 +59,7 @@ router.delete('/scheduled/:id', async (req, res) => {
 
   try {
     await prisma.scheduledMessage.delete({ where: { id } });
-    res.status(200).send('Message canceled.');
+    res.status(200).send('Message cancelled.');
   } catch (err) {
     console.error('Cancel scheduled message error:', err);
     res.status(500).send('Failed to cancel message.');
